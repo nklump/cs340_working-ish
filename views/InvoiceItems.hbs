@@ -1,0 +1,224 @@
+<!-- INVOICE ITEMS PAGE -->
+  
+  <!-- DELETE JS SCRIPT -->
+<script src="./js/invoiceItem/delete_invoiceItem.js"></script>
+
+  <div class="table-responsive">
+    <div class="table-wrapper">			
+      <div style="margin-top:100px; margin-bottom: 100px;">
+        <div class="container">
+          <div class="row table-responsive align-middle">
+
+                <!-- INVOICES ITEMS-->
+                <h1>Invoice Items</h1>
+                <hr>
+                <p>Use this page to add, update, update or remove the details individual Invoice Items on Invoices of a customer's purchase:</p>
+
+                <!-- ADD / EDIT BUTTONS -->
+                <table>
+					<tbody>
+                    <tr>
+                      <td>
+                      <a href="#addInvoiceItemModal" class="add" data-bs-toggle="modal">
+                      <button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-target="addInvoiceItemModal" title="Add">Add A New Invoice Item + </button></a>
+                      {{!-- <a href="#updateInvoiceItemModal" class="update" data-bs-toggle="modal">
+                      <button type="button" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-target="updateInvoiceItemModal" title="Update">Update an Invoice Item </button> --}}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+
+                <!-- DATA TABLE -->
+                <table class="table table-hover" id="invoiceItems-table">
+                    <thead class="table-light">
+                      <tr>
+                       <th>invoiceItem_id</th>
+						<th>invoice_id</th>
+						<th>plant_id</th>
+						<th>plant_quantity</th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{#each data}}
+                      <tr data-value={{this.invoiceItem_id}}>
+                        <td>{{this.invoiceItem_id}}</td>
+                        <td>{{this.invoice_id}}</td>
+                        <td>{{this.plant_id}}</td>
+                        <td>{{this.plant_quantity}}</td>
+                        
+						<!-- DELETE -->
+						<td><a href="#deleteInvoiceItemModal" class="delete" data-bs-toggle="modal" data-bs-target="#deleteInvoiceItemModal{{this.invoiceItem_id}}"  data-value="{{this.invoiceItem_id}}">
+						<button class="btn btn-outline-danger my-2 my-sm-0" >Delete</button></a></td>
+						<!-- Update -->
+						<td><a href="#updateInvoiceItemModal" class="update" data-bs-toggle="modal" data-bs-target="#updateInvoiceItemModal{{this.invoiceItem_id}}"  data-value="{{this.invoiceItem_id}}">
+						<button class="btn btn-outline-warning my-2 my-sm-0" >Update</button></a></td>
+					  </tr>
+                      {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+  <!-- ADD MODAL -->
+	<div id="addInvoiceItemModal" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form id="add-invoiceItem-form-ajax">
+					<div class="modal-header">						
+						<h4 class="modal-title">Add Invoice Item</h4>
+						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+            		<p style="color:red;">Required Fields *</p>						
+						<div class="form-group">
+							<label for="input-invoice_id">Invoice ID: *</label>
+							<br>
+							<select class="custom-select mr-sm-2" name="input-invoice_id" id="input-invoice_id" required />
+								<option value="">Select an Invoice</option>
+								{{#each invoices}}
+								<option value="{{this.invoice_id}}">{{this.invoice_id}}</option>
+								{{/each}}
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="input-plant_id">Plant Name: *</label>
+							<br>
+							<select class="custom-select mr-sm-2" name="input-plant_id" id="input-plant_id" required />
+								<option value="">Select a Plant</option>
+								{{#each plants}}
+								<option value="{{this.plant_id}}">{{this.plant_name}}</option>
+								{{/each}}
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="input-plant_quantity">Plant Quantity: *</label>
+							<input type="number" class="form-control"  name="input-plant_quantity" id="input-plant_quantity" min="0" max="9999" step="1" required />
+						</div>
+          			</div>					
+					<div class="modal-footer">
+						<input type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
+						<input type="submit" class="btn btn-success" value="Add">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- ADD JS SCRIPT -->
+	<script src="./js/invoiceItem/add_invoiceItem.js"></script>
+
+	<!-- UPDATE MODAL -->
+	{{#each data}}
+	<div class="modal" id="updateInvoiceItemModal{{this.invoiceItem_id}}">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form id="update-invoiceItem-form-ajax">
+					<div class="modal-header">						
+						<h4 class="modal-title">Update Invoice Item</h4>
+						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					  <div class="modal-body">
+            			<p style="color:red;">Required Fields *</p>
+						<p><b>Select the Invoice Item you would like to update:</b></p>					
+						<div class="form-group">
+							<label for="input-invoiceItem_id-update">Invoice Item ID: *</label>
+							<br>
+							<select name="input-invoiceItem_id-update" id="input-invoiceItem_id-update" disabled="disabled" required="required">
+								<option id="invoiceItem_id_field">{{this.invoiceItem_id}}</option>
+								{{#each @root.data}}
+								<option value="{{this.invoiceItem_id}}">{{this.invoiceItem_id}}</option>
+								{{/each}}
+							</select>
+							<br>
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="input-invoice_id-update">Invoice ID: *</label>
+							<br>
+							<select name="input-invoice_id-update" id="input-invoice_id-update" required="required">
+								<option id="invoice_id_field">{{this.invoice_id}}</option>
+								{{#each @root.invoices}}
+								<option value="{{this.invoice_id}}">{{this.invoice_id}}</option>
+								{{/each}}
+							</select>
+							<br>
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="input-plant_id-update">Plant: *</label>
+							<br>
+							<select name="input-plant_id-update" id="input-plant_id-update" required="required">
+								<option id="plant_name_field">{{this.plant_id}}</option>
+								{{#each @root.plants}}
+								<option value="{{this.plant_id}}">{{this.plant_name}}</option>
+								{{/each}}
+							</select>
+							<br>
+						</div>
+						{{!-- <script>
+							function test() {
+								let thisVar = {{@root.plantmap.0.plant_name}};
+								console.log(thisVar);
+							}
+							let testBtn2 = document.getElementById("input-plant_id-update");
+							testBtn2.addEventListener('click', event => {
+								test();
+							});
+						</script> --}}
+						<br>
+						<div class="form-group">
+							<label for="input-plant_quantity">Update Plant Quantity: *</label>
+							<br>
+							<input name="input-plant_quantity-update" id="input-plant_quantity-update" type="number" class="form-control" min="0" max="9999" step="1" placeholder="{{this.plant_quantity}}" value="{{this.plant_quantity}}" required>
+						</div>
+            		</div>
+					  <div class="modal-footer">
+						<input type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" value="Cancel">
+						<input id="update-submit" type="submit" class="btn btn-outline-success" value="Submit" onclick="updateInvoiceItem({{this.invoiceItem_id}})">
+					  </div>
+				</form>
+			</div>
+		</div>
+	</div>
+	{{/each}}
+	<!-- UPDATE JS SCRIPT -->
+	<script src="./js/invoiceItem/update_invoiceItem.js"></script>
+
+	<!-- DELETE MODAL -->
+	{{#each data}}
+	<div class="modal" id="deleteInvoiceItemModal{{this.invoiceItem_id}}">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form>
+					<div class="modal-header">						
+						<h4 class="modal-title">Delete Invoice Item</h4>
+						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">					
+						<p>Are you sure you want to delete this Invoice Item?</p>
+						<p>This action cannot be undone.</p>
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
+						<input type="submit" class="btn btn-outline-danger" value="Delete" onclick="deleteInvoiceItem({{this.invoiceItem_id}})">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	{{/each}}
+</div>
+</div>
+
+{{!-- <script>
+	function test() {
+		console.log(this);
+	}
+	let testBtn2 = document.getElementById("input-plant_id-update");
+	testBtn2.addEventListener('click', event => {
+		test();
+	});
+</script> --}}

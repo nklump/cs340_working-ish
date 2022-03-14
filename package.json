@@ -1,0 +1,21 @@
+{
+  "name": "cactus_club",
+  "version": "1.0.0",
+  "description": "CS 340 Datasbase Project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mysql",
+    "node"
+  ],
+  "author": "Alexia Banos Perez & Nathan Klump ",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2",
+    "express-handlebars": "^6.0.2",
+    "forever": "^4.0.3",
+    "mysql": "^2.18.1"
+  }
+}

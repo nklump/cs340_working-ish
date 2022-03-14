@@ -1,0 +1,173 @@
+<!-- CASHIERS PAGE -->
+
+<!-- DELETE JS SCRIPT -->
+<script src="./js/cashier/delete_cashier.js"></script>
+
+<div style="margin-top:100px; margin-bottom: 100px;">
+	<div class="container">
+		<div class="row table-responsive align-middle">
+			
+			<!-- CASHIERS -->
+			<h1>Cashiers</h1>
+			<hr>
+			<p>Use this page to add, edit, update or remove the details of cashiers employed by the store:</p>
+
+			<!-- ADD BUTTON -->
+			<table>
+				<tr>
+					<td colspan="6" align="left">
+					<a href="#addCashierModal" class="add" data-bs-toggle="modal">
+					<button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-target="addCashierModal" title="Add">Add A New Cashier + </button></a>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+
+			<!-- SEARCH BAR -->
+			 <table class="table table-hover">
+				<thead class="table-light">
+				<div class="input-group"></div>
+				<form id="search-cashier-html" method='GET' action='/Cashiers'>	
+				<tr>
+					<label for="input-cashier_last"><th>Search by Last Name:</th></label>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td colspan="6">
+					<input class="form-control mr-sm-2" type="search" placeholder="Enter last name..." type="text" name="cashier_last" id="input-cashier_last-html-search">
+					<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+					<a href='/Cashiers'><button class="btn btn-outline-secondary my-2 my-sm-0">Clear Search Results</button></a>
+					</div>
+				</form>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+
+			<!-- DATA TABLE -->
+			<table class="table table-hover" id="cashiers-table">
+				<thead class="table-light">
+					<tr>
+					{{#each data.[0]}}
+					<th>{{@key}}</th>
+					{{/each}}
+					<th> Delete </th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each data}}
+					<tr data-value={{this.cashier_id}}>
+					<td>{{this.cashier_id}}</td>
+					<td>{{this.cashier_first}}</td>
+					<td>{{this.cashier_last}}</td>
+					<td>{{this.hourly_rate}}</td>
+					
+					<!-- DELETE -->
+					<td><a href="#deleteCashierModal" class="delete" data-bs-toggle="modal" data-bs-target="#deleteCashierModal{{this.cashier_id}}"  data-value="{{this.cashier_id}}">
+					<button class="btn btn-outline-danger my-2 my-sm-0" >Delete</button></a></td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<!-- ADD MODAL -->
+<div id="addCashierModal" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id="add-cashier-form-ajax">
+				<div class="modal-header">						
+					<h4 class="modal-title">Add Cashier</h4>
+					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p style="color:red;">Required Fields *</p>					
+					<div class="form-group">
+						<label for="input-cashier_first">First Name: *</label>
+						<input type="text" class="form-control" name="input-cashier_first" id="input-cashier_first" maxlength="50" required>
+					</div>
+					<div class="form-group">
+						<label for="input-cashier_last">Last Name: *</label>
+						<input type="text" class="form-control" name="input-cashier_last" id="input-cashier_last" maxlength="50" required>
+					</div>
+					<div class="form-group">
+						<label for="input-hourly_rate">Hourly Rate: *</label>
+						<input type="number" class="form-control" name="input-hourly_rate" id="input-hourly_rate" min="0.00" max="99.00" step="0.01" required>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
+					<input type="submit" class="btn btn-success" value="Add">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- ADD JS SCRIPT -->
+<script src="./js/cashier/add_cashier.js"></script>
+
+<!-- EDIT MODAL -->
+<div id="editCashierModal" class="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form>
+				<div class="modal-header">						
+					<h4 class="modal-title">Edit Cashier</h4>
+					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p style="color:red;">Required Fields *</p>						
+					<div class="form-group">
+						<label>Cashier ID: *</label>
+						<input type="text" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Cashier First Name: *</label>
+						<input type="text" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Cashier Last Name: *</label>
+						<input type="text" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label>Cashier Hourly Rate: *</label>
+						<input type="text" class="form-control" required>
+					</div>
+				</div>					
+				<div class="modal-footer">
+					<input type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
+					<input type="submit" class="btn btn-outline-success" value="Save">
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- DELETE MODAL -->
+{{#each data}}
+<div class="modal" id="deleteCashierModal{{this.cashier_id}}">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form>
+				<div class="modal-header">						
+					<h4 class="modal-title">Delete Cashier</h4>
+					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">					
+					<p>Are you sure you want to delete this Cashier?</p>
+					<p>This action cannot be undone.</p>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
+					<input type="submit" class="btn btn-outline-danger" value="Delete" onclick="deleteCashier({{this.cashier_id}})">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{{/each}}

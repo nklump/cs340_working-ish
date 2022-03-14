@@ -1,0 +1,142 @@
+<!-- PLANTS PAGE -->
+
+<!-- DELETE JS SCRIPT -->
+<script src="./js/plant/delete_plant.js"></script>
+
+  <div class="table-responsive">
+    <div class="table-wrapper">		
+      <div style="margin-top:100px; margin-bottom: 100px;">
+        <div class="container">
+          <div class="row table-responsive align-middle">
+
+                <!-- PLANTS -->
+                <h1>Plants</h1>
+                <hr>
+                <p>Use this page to add, edit, update or remove the details of plants for sale in the store:</p>
+
+                <!-- ADD BUTTON -->
+				<table>
+					<tbody>
+                      <tr>
+						<td colspan="4" align="left">
+						<a href="#addPlantModal" class="edit" data-bs-toggle="modal">
+						<button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-target="addPlantModal" title="Add">Add A New Plant + </button></a>
+						</td>
+                      </tr>
+                    </tbody>
+                </table>
+
+                <!-- DATA TABLE -->
+                <table class="table table-hover" id="plants-table">
+                    <thead class="table-light">
+                      <tr>
+                        {{#each data.[0]}}
+                        <th>{{@key}}</th>
+                        {{/each}}
+                        <th> Delete </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      	{{#each data}}
+                      	<tr data-value={{this.plant_id}}>
+                        <td>{{this.plant_id}}</td>
+                        <td>{{this.plant_name}}</td>
+                        <td>{{this.plant_price}}</td>
+
+                        <!-- DELETE -->
+						<td><a href="/Plants"><button class="btn btn-outline-danger my-2 my-sm-0" onclick="deletePlant({{this.plant_id}})">Delete</button></a></td>
+                      </tr>
+                      {{/each}}
+                      </tbody>
+                </table>
+            </div>
+        </div> 
+    </div>
+
+  <!-- ADD MODAL -->
+	<div id="addPlantModal" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form id="add-plant-form-ajax">
+					<div class="modal-header">						
+						<h4 class="modal-title">Add Plant</h4>
+						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+            <p style="color:red;">Required Fields *</p>						
+						<div class="form-group">
+							<label for="plant_name">Plant Name: *</label>
+							<input type="text" class="form-control" name="input-plant_name" id="input-plant_name" maxlength="50" required>
+						</div>
+						<div class="form-group">
+							<label for ="plant_price">Plant Price: *</label>
+							<input type="number" class="form-control" name="input-plant_price" id="input-plant_price" min="0.00" max="9999.00" step="0.01" required>
+						</div>			
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
+						<input type="submit" class="btn btn-success" value="Add">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+<!-- ADD JS SCRIPT -->
+<script src="./js/plant/add_plant.js"></script>
+
+	<!-- EDIT MODAL -->
+	<div id="editPlantModal" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form>
+					<div class="modal-header">						
+						<h4 class="modal-title">Edit Plant</h4>
+						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+            <p style="color:red;">Required Fields *</p>						
+						<div class="form-group">
+							<label>Plant ID: *</label>
+							<input type="text" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Plant Name: *</label>
+							<input type="text" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Plant Price: *</label>
+							<input type="text" class="form-control" required>
+						</div>
+            </div>			
+					  <div class="modal-footer">
+						<input type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
+						<input type="submit" class="btn btn-outline-success" value="Save">
+					  </div>
+          </div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- DELETE MODAL -->
+	<div id="deletePlantModal" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form>
+					<div class="modal-header">						
+						<h4 class="modal-title">Delete Plant</h4>
+						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">					
+						<p>Are you sure you want to delete this Plant?</p>
+						<p>This action cannot be undone.</p>
+					</div>
+					<div class="modal-footer">
+						<input type="button" class="btn btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
+						<input type="submit" class="btn btn-outline-danger" value="Delete">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
